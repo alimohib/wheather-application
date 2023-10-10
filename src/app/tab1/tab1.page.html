@@ -1,17 +1,30 @@
-<ion-header [translucent]="true">
+<ion-header  >
   <ion-toolbar>
-    <ion-title>
-      Tab 1
+    <ion-title >
+      Current Weather
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item lines="none">
+    <ion-label position="stacked">Enter City</ion-label>
+    <ion-input 
+    [(ngModel)]="city" >
+  </ion-input>
+  </ion-item>
+  <ion-button expand="block" (click)="searchWeather()">Search</ion-button>
+  <ion-button expand="block" (click)="getCurrentLocationWeather()">Get Current Location Weather</ion-button>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  
+  <ion-card *ngIf="weather" >
+    <ion-card-header>
+      {{ weather.name }}, {{ weather.sys?.country }}
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img  [src]="'https://openweathermap.org/img/w/' + weather.weather[0].icon +'.png'"></ion-img>
+      <p>{{ weather.weather[0].description }}</p>
+      <p>Temperature: {{ weather.main.temp }}°C</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

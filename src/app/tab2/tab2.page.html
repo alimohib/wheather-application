@@ -1,17 +1,26 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 2
+    <ion-title *ngIf="defaultSetlocation">
+      Weather Forecast - Pune
+    </ion-title>
+    <ion-title *ngIf="UserCurrentlocation">
+      Weather Forecast - Current location
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-button expand="block" *ngIf="defaultSetlocation" (click)="getForecastForCurrentLocation()">Get Current Location Weather</ion-button>
+  <ion-button expand="block"  *ngIf="UserCurrentlocation"  (click)="ionViewDidEnter()">Get Pune Location Weather</ion-button>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-card *ngFor="let forecast of forecastsArray">
+    <ion-card-header>
+       {{ forecast.dt * 1000  | date: 'medium' }} 
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img [src]="'https://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png'"></ion-img>
+      <p>{{ forecast.weather[0].description }}</p>
+      <p>Temperature: {{ forecast.main.temp }}°C</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
